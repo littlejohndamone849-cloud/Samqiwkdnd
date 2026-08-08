@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#19191b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Wallet Demo">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<title>Wallet UI Demo</title>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:#19191b;color:#f2f2f5;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif;zoom:0.75;-moz-transform:scale(0.75);-moz-transform-origin:top center}
+  body{min-height:100vh;overflow-x:hidden}
+  button,input{font:inherit}
+  .app{width:100%;max-width:1170px;margin:auto;min-height:100vh;padding:34px 44px 150px;position:relative;will-change:transform}
+  .top{display:flex;align-items:center;justify-content:space-between}
+  .wallet-pill,.icon-btn{border:1px solid #39393d;background:#1c1c1f;color:#f5f5f7}
+  .wallet-pill{height:76px;border-radius:40px;padding:0 28px 0 12px;display:flex;align-items:center;gap:18px;font-size:25px;font-weight:650}
+  .wallet-icon{width:54px;height:54px;border-radius:50%;background:#42f58b;display:grid;place-items:center;color:#111}
+  .wallet-icon svg{width:30px;height:30px}
+  .top-icons{display:flex;gap:18px}
+  .icon-btn{width:72px;height:72px;border-radius:50%;display:grid;place-items:center}
+  .icon-btn svg{width:31px;height:31px;stroke-width:2}
+  .banner{margin-top:34px;height:160px;border:2px solid #3a3a3c;border-radius:34px;background:#151517;display:flex;align-items:center;padding:20px 30px;gap:28px}
+  .banner-orb{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#101827,#0b0b10);border:1px solid #5570a5;display:grid;place-items:center;font-size:34px}
+  .banner-title{font-size:28px;font-weight:700}.banner-sub{font-size:23px;color:#99999f;margin-top:8px}
+  .balance{margin-top:58px}
+  .balance-main{font-size:82px;line-height:1;font-weight:700;letter-spacing:-3px}
+  .change{font-size:28px;color:#aaaab0;margin-top:22px}
+  .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-top:76px}
+  .action{height:150px;border:0;border-radius:34px;background:#2a2a2e;color:#f1f1f3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:17px;cursor:pointer}
+  .action.swap{background:#42f58b;color:#111}
+  .action svg{width:47px;height:47px;stroke-width:2.3}
+  .action span{font-size:25px}
+  .section{margin-top:70px}
+  .section-title{font-size:32px;font-weight:700;margin-bottom:38px;display:flex;align-items:center;gap:12px}
+  .chev{font-size:42px;font-weight:300;line-height:.6}
+  .token{display:flex;align-items:center;justify-content:space-between;padding:8px 0}
+  .token-left{display:flex;align-items:center;gap:22px}
+  .coin{width:84px;height:84px;border-radius:50%;display:grid;place-items:center}
+  .token-name{font-size:28px;font-weight:700}.token-amount{font-size:24px;color:#a2a2a8;margin-top:8px}
+  .token-right{text-align:right}.token-price{font-size:29px;font-weight:650}.token-up{font-size:23px;color:#42f58b;margin-top:8px}
+  .cards{display:flex;gap:28px;overflow:hidden}
+  .card{flex:0 0 342px;height:250px;border-radius:30px;background:#2a2a2e;padding:34px}
+  .card-icon{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:#f39a18;font-size:40px}
+  .card-label{font-size:28px;font-weight:700;margin-top:26px}.card-meta{font-size:23px;color:#aaa;margin-top:10px}
+  .prediction{flex:0 0 520px;height:320px;border-radius:30px;background:#2a2a2e;padding:30px 38px}
+  .prediction-icon{width:76px;height:76px;border-radius:18px;background:#0b7540;display:grid;place-items:center;font-size:28px}
+  .prediction-date{float:right;color:#aaa;font-size:23px;margin-top:-58px}.prediction-title{font-size:29px;font-weight:650;line-height:1.3;margin-top:36px}
+  .earn{flex:0 0 342px;height:250px;border-radius:30px;background:#2a2a2e;padding:34px}
+  .earn-icon{width:78px;height:78px;border-radius:50%;background:#080808;display:grid;place-items:center;font-size:38px}
+  .apy{font-size:28px;font-weight:700;margin-top:26px}.on{font-size:23px;color:#aaa;margin-top:10px}
+  .ai{margin-top:60px;height:150px;border-radius:30px;background:#2a2a2e;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 38px;font-size:29px;font-weight:650}
+  .ask{background:#444449;border-radius:42px;padding:23px 34px;font-size:25px}
+  .customize{margin:70px auto 0;width:max-content;background:#2a2a2e;border:0;color:#eee;border-radius:45px;padding:22px 38px;font-size:27px;font-weight:650}
+  .bottom{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);width:min(780px,88vw);height:105px;border:2px solid #45454a;background:rgba(55,55,59,.88);backdrop-filter:blur(22px);border-radius:55px;display:grid;grid-template-columns:repeat(4,1fr);align-items:center;padding:8px 18px;z-index:10}
+  .bottom-item{height:86px;display:grid;place-items:center;border-radius:48px;font-size:39px;color:#eee}.bottom-item.active{background:#626267}
+  .search{position:fixed;right:35px;bottom:28px;width:105px;height:105px;border-radius:50%;border:2px solid #45454a;background:rgba(55,55,59,.88);backdrop-filter:blur(22px);display:grid;place-items:center;z-index:10}
+  .search svg{width:45px;height:45px}
+  .demo{position:fixed;top:14px;right:18px;z-index:30;background:#ffcc00;color:#111;padding:6px 11px;border-radius:9px;font-size:12px;font-weight:800;letter-spacing:.5px}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.62);display:none;align-items:flex-end;z-index:50}
+  .sheet{width:100%;background:#242427;border-radius:32px 32px 0 0;padding:28px 28px calc(28px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px #0008}
+  .handle{width:48px;height:5px;border-radius:4px;background:#666;margin:0 auto 25px}
+  .sheet h2{margin:0 0 8px;font-size:27px}.sheet p{color:#aaa;margin:0 0 24px}
+  .input{width:100%;height:62px;background:#151517;border:1px solid #49494e;border-radius:17px;color:#fff;padding:0 18px;font-size:22px;outline:none}
+  .sheet-buttons{display:flex;gap:12px;margin-top:16px}.sheet button{flex:1;border:0;border-radius:17px;height:58px;font-weight:700}.cancel{background:#3a3a3f;color:#fff}.save{background:#42f58b;color:#111}
+  #pull-spinner{position:fixed;top:-50px;left:50%;transform:translateX(-50%);width:40px;height:40px;color:#a2a2a8;opacity:0;z-index:100;pointer-events:none;transition:opacity .2s,top .2s}
+  #pull-spinner.spin svg{animation:spin 1s linear infinite}@keyframes spin{100%{transform:rotate(360deg)}}
+  @media(max-width:700px){
+    .app{padding:18px 34px 145px}.wallet-pill{height:66px;font-size:19px;padding-right:20px}.wallet-icon{width:50px;height:50px}
+    .top-icons{gap:10px}.icon-btn{width:62px;height:62px}
+    .banner{margin-top:22px;height:125px;border-radius:27px;padding:15px 20px;gap:18px}.banner-orb{width:58px;height:58px}.banner-title{font-size:19px}.banner-sub{font-size:16px}
+    .balance{margin-top:48px}.balance-main{font-size:62px}.change{font-size:20px;margin-top:16px}
+    .actions{gap:14px;margin-top:58px}.action{height:115px;border-radius:27px;gap:10px}.action svg{width:38px;height:38px}.action span{font-size:19px}
+    .section{margin-top:54px}.section-title{font-size:26px;margin-bottom:27px}.coin{width:68px;height:68px}
+    .token-left{gap:15px}.token-name{font-size:21px}.token-amount{font-size:17px}.token-price{font-size:21px}.token-up{font-size:17px}
+    .cards{gap:20px}.card,.earn{flex-basis:280px;height:205px;padding:25px}.card-icon,.earn-icon{width:62px;height:62px;font-size:30px}.card-label,.apy{font-size:22px}.card-meta,.on{font-size:18px}
+    .prediction{flex-basis:420px;height:255px;padding:24px}.prediction-icon{width:60px;height:60px}.prediction-title{font-size:22px}.prediction-date{font-size:18px}
+    .ai{height:125px;margin-top:45px;font-size:22px}.ask{font-size:18px;padding:17px 22px}.customize{font-size:21px;margin-top:48px}
+    .bottom{height:78px;bottom:14px;width:72vw}.bottom-item{height:62px;font-size:29px}.search{width:78px;height:78px;right:14px;bottom:14px}
+  }
+</style>
+</head>
+<body>
+<div class="demo">DEMO • NO REAL FUNDS</div>
+<div id="pull-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></div>
+<main class="app">
+<header class="top"><button class="wallet-pill"><span class="wallet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2"/><path d="M7 9h9M15 13h4"/></svg></span>Main Wallet</button><div class="top-icons"><button class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button><button class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg></button></div></header>
+<section class="banner"><div class="banner-orb">◉</div><div><div class="banner-title">Hyperliquid now live in Predictions</div><div class="banner-sub">Explore now</div></div></section>
+<section class="balance"><div id="usdBalance" class="balance-main">$0.10</div><div id="change" class="change">$0.00 (1.21%)</div></section>
+<section class="actions"><button class="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 19 19 5M9 5h10v10"/></svg><span>Send</span></button><button id="receiveBtn" class="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4v16M5 13l7 7 7-7"/></svg><span>Receive</span></button><button class="action swap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 3v5h-5M7 21v-5h5M17 8a7 7 0 0 0-12-2M7 16a7 7 0 0 0 12-2"/></svg><span>Swap</span></button><button class="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg><span>Buy</span></button></section>
+<section class="section"><div class="section-title">Tokens <span class="chev">›</span></div><button id="editToken" class="token" style="width:100%;background:none;border:0;color:inherit;text-align:inherit;cursor:pointer"><div class="token-left"><div class="coin"><img src="https://i.ibb.co/4RpxpBjc/image.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover" alt="LTC"></div><div><div class="token-name">Litecoin</div><div id="ltcAmount" class="token-amount">0.00217439 LTC</div></div></div><div class="token-right"><div id="ltcPrice" class="token-price">$45.94</div><div id="tokenChange" class="token-up">+$0.0012</div></div></button></section>
+<section class="section"><div class="section-title">Perps <span class="chev">›</span></div><div class="cards"><div class="card"><div class="card-icon"><img src="https://i.ibb.co/2Ypp8B1W/image.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover" alt="BTC"></div><div class="card-label">BTC <span style="color:#aaa;font-size:18px">40x</span></div><div class="card-meta">$400.44M Vol</div></div><div class="card"><div class="card-icon"><img src="https://i.ibb.co/m5vTtbL0/image.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover" alt="ETH"></div><div class="card-label">ETH <span style="color:#aaa;font-size:18px">25x</span></div><div class="card-meta">$168.54M Vol</div></div><div class="card"><div class="card-icon" style="background:#111">S</div><div class="card-label">SOL</div><div class="card-meta">$120.00M Vol</div></div></div></section>
+<section class="section"><div class="section-title">Predictions <span class="chev">›</span></div><div class="cards"><div class="prediction"><div class="prediction-icon">★</div><div class="prediction-date">⚡ May 30</div><div class="prediction-title">UEFA Champions League:<br>2027 Champion</div></div><div class="prediction"><div class="prediction-icon" style="background:#18213a">◉</div><div class="prediction-title">Earn on outcomes of<br>politics, sports & more</div></div></div></section>
+<section class="section"><div class="section-title">Earn <span class="chev">›</span></div><div class="cards"><div class="earn"><div class="earn-icon">✣</div><div class="apy">24.10% APY</div><div class="on">on JUNO</div></div><div class="earn"><div class="earn-icon">◒</div><div class="apy">15.35% APY</div><div class="on">on KSM</div></div><div class="earn"><div class="earn-icon">●</div><div class="apy">12.00% APY</div><div class="on">on ATOM</div></div></div></section>
+<div class="ai"><span>✦ Trust Wallet AI</span><span class="ask">Ask anything&nbsp; ›</span></div><div class="section-title" style="margin-top:70px">NFTs <span class="chev">›</span></div><div class="section-title" style="margin-top:60px">Watchlist <span class="chev">›</span></div><button class="customize">☷ &nbsp; Customize</button>
+</main>
+<nav class="bottom"><div class="bottom-item active">▰</div><div class="bottom-item">↗</div><div class="bottom-item">∞</div><div class="bottom-item">◉</div></nav><button class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+<div id="receiveOverlay" class="overlay"><div class="sheet"><div class="handle"></div><h2>Receive Litecoin</h2><p>How much LTC do you want to add to your fake balance?</p><input id="receiveInput" class="input" inputmode="decimal" type="number" min="0" step="0.00000001" placeholder="LTC amount"><div class="sheet-buttons"><button class="cancel" id="receiveCancel">Cancel</button><button class="save" id="receiveAdd">Add to balance</button></div></div></div>
+<div id="overlay" class="overlay"><div class="sheet"><div class="handle"></div><h2>Set Litecoin balance</h2><p>Demo only. This changes the displayed balance and does not change any real wallet funds.</p><input id="amountInput" class="input" inputmode="decimal" type="number" min="0" step="0.00000001" placeholder="LTC amount"><div class="sheet-buttons"><button class="cancel" id="cancel">Cancel</button><button class="save" id="save">Save</button></div></div></div>
+<script>
+let ltcAmount=Number(localStorage.getItem("demoLtcAmount")??"0.00217439"),ltcPrice=45.94,previousPrice=ltcPrice;
+const $=id=>document.getElementById(id);
+function money(n){if(!Number.isFinite(n))return"$0.00";if(Math.abs(n)<.01)return"$"+n.toFixed(4);return"$"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function ltcFmt(n){return n.toLocaleString("en-US",{minimumFractionDigits:8,maximumFractionDigits:8})+" LTC"}
+function render(){const value=ltcAmount*ltcPrice;$("usdBalance").textContent=money(value);$("ltcAmount").textContent=ltcFmt(ltcAmount);$("ltcPrice").textContent=money(ltcPrice);const delta=(ltcPrice-previousPrice)*ltcAmount;$("tokenChange").textContent=(delta>=0?"+":"")+money(delta);const pct=previousPrice?((ltcPrice-previousPrice)/previousPrice)*100:0;$("change").textContent=(delta>=0?"+":"")+money(delta)+" ("+(pct>=0?"+":"")+pct.toFixed(2)+"%)"}
+async function refreshPrice(){try{const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd",{cache:"no-store"});if(!r.ok)throw Error("price request failed");const data=await r.json();if(data?.litecoin?.usd){previousPrice=ltcPrice;ltcPrice=Number(data.litecoin.usd);render()}}catch(e){console.warn("Live LTC price unavailable; using last known price.",e);render()}}
+let touchStartY=0,pullDistance=0;const PULL_THRESHOLD=80,appEl=document.querySelector(".app"),spinner=$("pull-spinner");
+document.addEventListener("touchstart",e=>{if(window.scrollY===0)touchStartY=e.touches[0].clientY},{passive:true});
+document.addEventListener("touchmove",e=>{if(window.scrollY===0&&touchStartY>0){const currentY=e.touches[0].clientY;pullDistance=currentY-touchStartY;if(pullDistance>0){const visualPull=Math.min(pullDistance*.4,120);appEl.style.transform=`translateY(${visualPull}px)`;appEl.style.transition="none";spinner.style.opacity=Math.min(pullDistance/PULL_THRESHOLD,1);spinner.style.top=`${visualPull-25}px`;if(e.cancelable)e.preventDefault()}}},{passive:false});
+document.addEventListener("touchend",()=>{if(pullDistance>PULL_THRESHOLD){appEl.style.transition="transform .3s ease";appEl.style.transform="translateY(70px)";spinner.style.top="35px";spinner.classList.add("spin");setTimeout(()=>{appEl.style.transform="translateY(0)";spinner.style.opacity="0";spinner.classList.remove("spin");refreshPrice()},1500)}else if(pullDistance>0){appEl.style.transition="transform .3s ease";appEl.style.transform="translateY(0)";spinner.style.opacity="0"}touchStartY=0;pullDistance=0});
+$("receiveBtn").onclick=()=>{$("receiveInput").value="";$("receiveOverlay").style.display="flex";setTimeout(()=>$("receiveInput").focus(),50)};
+$("receiveCancel").onclick=()=>$("receiveOverlay").style.display="none";
+$("receiveOverlay").addEventListener("click",e=>{if(e.target===$("receiveOverlay"))$("receiveOverlay").style.display="none"});
+$("receiveAdd").onclick=()=>{const amount=Number($("receiveInput").value);if(Number.isFinite(amount)&&amount>0){ltcAmount+=amount;localStorage.setItem("demoLtcAmount",String(ltcAmount));render();$("receiveOverlay").style.display="none"}};
+$("editToken").onclick=()=>{$("amountInput").value=ltcAmount;$("overlay").style.display="flex";setTimeout(()=>$("amountInput").focus(),50)};
+$("cancel").onclick=()=>$("overlay").style.display="none";
+$("overlay").addEventListener("click",e=>{if(e.target===$("overlay"))$("overlay").style.display="none"});
+$("save").onclick=()=>{const v=Number($("amountInput").value);if(Number.isFinite(v)&&v>=0){ltcAmount=v;localStorage.setItem("demoLtcAmount",String(v));render();$("overlay").style.display="none"}};
+render();refreshPrice();setInterval(refreshPrice,60000);
+</script>
+</body>
+</html>
