@@ -1,6 +1,6 @@
 {
-  "name": "Wallet UI Demo",
-  "short_name": "Wallet Demo",
+  "name": "Trust Wallet",
+  "short_name": "Trust",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#19191b",
