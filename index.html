@@ -24,9 +24,6 @@
   .top-icons{display:flex;gap:18px}
   .icon-btn{width:72px;height:72px;border-radius:50%;display:grid;place-items:center}
   .icon-btn svg{width:31px;height:31px;stroke-width:2}
-  .banner{margin-top:34px;height:160px;border:2px solid #3a3a3c;border-radius:34px;background:#151517;display:flex;align-items:center;padding:20px 30px;gap:28px}
-  .banner-orb{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#101827,#0b0b10);border:1px solid #5570a5;display:grid;place-items:center;font-size:34px}
-  .banner-title{font-size:28px;font-weight:700}.banner-sub{font-size:23px;color:#99999f;margin-top:8px}
   .balance{margin-top:58px}
   .balance-main{font-size:82px;line-height:1;font-weight:700;letter-spacing:-3px}
   .change{font-size:28px;color:#aaaab0;margin-top:22px}
@@ -68,7 +65,6 @@
   @media(max-width:700px){
     .app{padding:80px 34px 145px}.wallet-pill{height:66px;font-size:19px;padding-right:20px}.wallet-icon{width:50px;height:50px}
     .top-icons{gap:10px}.icon-btn{width:62px;height:62px}
-    .banner{margin-top:22px;height:125px;border-radius:27px;padding:15px 20px;gap:18px}.banner-orb{width:58px;height:58px}.banner-title{font-size:19px}.banner-sub{font-size:16px}
     .balance{margin-top:48px}.balance-main{font-size:62px}.change{font-size:20px;margin-top:16px}
     .actions{gap:14px;margin-top:58px}.action{height:115px;border-radius:27px;gap:10px}.action svg{width:38px;height:38px}.action span{font-size:19px}
     .section{margin-top:54px}.section-title{font-size:26px;margin-bottom:27px}.coin{width:68px;height:68px}
@@ -83,7 +79,7 @@
 <div id="pull-spinner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></div>
 <main class="app">
 <header class="top"><button class="wallet-pill"><span class="wallet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5" width="18" height="14" rx="2" stroke-width="2"/><path d="M7 9h9M15 13h4"/></svg></span>Main Wallet</button><div class="top-icons"><button class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button><button class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 9V5h4M20 9V5h-4M4 15v4h4M20 15v4h-4"/></svg></button></div></header>
-<section class="banner"><div class="banner-orb">◉</div><div><div class="banner-title">Hyperliquid now live in Predictions</div><div class="banner-sub">Explore now</div></div></section>
+
 <section class="balance"><div id="usdBalance" class="balance-main">$0.10</div><div id="change" class="change">$0.00 (1.21%)</div></section>
 <section class="actions"><button class="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 19 19 5M9 5h10v10"/></svg><span>Send</span></button><button id="receiveBtn" class="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4v16M5 13l7 7 7-7"/></svg><span>Receive</span></button><button class="action swap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 3v5h-5M7 21v-5h5M17 8a7 7 0 0 0-12-2M7 16a7 7 0 0 0 12-2"/></svg><span>Swap</span></button><button class="action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg><span>Buy</span></button></section>
 <section class="section"><div class="section-title">Tokens <span class="chev">›</span></div><button id="editToken" class="token" style="width:100%;background:none;border:0;color:inherit;text-align:inherit;cursor:pointer"><div class="token-left"><div class="coin"><img src="https://i.ibb.co/4RpxpBjc/image.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover" alt="LTC"></div><div><div class="token-name">Litecoin</div><div id="ltcAmount" class="token-amount">0.00217439 LTC</div></div></div><div class="token-right"><div id="ltcPrice" class="token-price">$45.94</div><div id="tokenChange" class="token-up">+$0.0012</div></div></button></section>
