@@ -39,7 +39,9 @@
   .token-left{display:flex;align-items:center;gap:22px}
   .coin{width:84px;height:84px;border-radius:50%;display:grid;place-items:center}
   .token-name{font-size:28px;font-weight:700}.token-amount{font-size:24px;color:#a2a2a8;margin-top:8px}
-  .token-right{text-align:right}.token-price{font-size:29px;font-weight:650}.token-up{font-size:23px;color:#42f58b;margin-top:8px}
+  .token-right{text-align:right}.token-price{font-size:29px;font-weight:650}
+  .token-up{font-size:23px;color:#42f58b;margin-top:8px}
+  .token-down{font-size:23px;color:#ff453a;margin-top:8px}
   
   /* Scrolling Cards System */
   .cards{
@@ -85,7 +87,7 @@
     .balance{margin-top:48px}.balance-main{font-size:62px}.change{font-size:20px;margin-top:16px}
     .actions{gap:14px;margin-top:58px}.action{height:115px;border-radius:27px;gap:10px}.action svg{width:38px;height:38px}.action span{font-size:19px}
     .section{margin-top:54px}.section-title{font-size:26px;margin-bottom:27px}.coin{width:68px;height:68px}
-    .token-left{gap:15px}.token-name{font-size:21px}.token-amount{font-size:17px}.token-price{font-size:21px}.token-up{font-size:17px}
+    .token-left{gap:15px}.token-name{font-size:21px}.token-amount{font-size:17px}.token-price{font-size:21px}.token-up,.token-down{font-size:17px}
     
     /* Responsive adjustment for exact 34px right spacing on mobile */
     .cards{gap:20px;margin-left:-34px;margin-right:-34px;padding-left:34px}
@@ -192,9 +194,38 @@
 <script>
 let ltcAmount=Number(localStorage.getItem("demoLtcAmount")??"0.00217439"),ltcPrice=45.94,previousPrice=ltcPrice;
 const $=id=>document.getElementById(id);
-function money(n){if(!Number.isFinite(n))return"$0.00";if(Math.abs(n)<.01)return"$"+n.toFixed(4);return"$"+n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+// Updated money format logic to grab the absolute value 
+// so we don't accidentally get double minus signs.
+function money(n){
+    if(!Number.isFinite(n)) return "$0.00";
+    const v = Math.abs(n);
+    if(v < .01) return "$" + v.toFixed(4);
+    return "$" + v.toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
 function ltcFmt(n){return n.toLocaleString("en-US",{minimumFractionDigits:8,maximumFractionDigits:8})+" LTC"}
-function render(){const value=ltcAmount*ltcPrice;$("usdBalance").textContent=money(value);$("ltcAmount").textContent=ltcFmt(ltcAmount);$("ltcPrice").textContent=money(ltcPrice);const delta=(ltcPrice-previousPrice)*ltcAmount;$("tokenChange").textContent=(delta>=0?"+":"")+money(delta);const pct=previousPrice?((ltcPrice-previousPrice)/previousPrice)*100:0;$("change").textContent=(delta>=0?"+":"")+money(delta)+" ("+(pct>=0?"+":"")+pct.toFixed(2)+"%)"}
+
+function render(){
+    const value = ltcAmount * ltcPrice;
+    $("usdBalance").textContent = money(value);
+    $("ltcAmount").textContent = ltcFmt(ltcAmount);
+    $("ltcPrice").textContent = money(ltcPrice);
+    
+    const delta = (ltcPrice - previousPrice) * ltcAmount;
+    const pct = previousPrice ? ((ltcPrice - previousPrice) / previousPrice) * 100 : 0;
+    
+    // Check if delta is positive or negative for formatting
+    const sign = delta >= 0 ? "+" : "-";
+    
+    // Apply string formatting and proper class/color logic
+    const tc = $("tokenChange");
+    tc.textContent = sign + money(delta);
+    tc.className = delta >= 0 ? "token-up" : "token-down";
+    
+    $("change").textContent = sign + money(delta) + " (" + (pct >= 0 ? "+" : "") + pct.toFixed(2) + "%)";
+}
+
 async function refreshPrice(){try{const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=litecoin&vs_currencies=usd",{cache:"no-store"});if(!r.ok)throw Error("price request failed");const data=await r.json();if(data?.litecoin?.usd){previousPrice=ltcPrice;ltcPrice=Number(data.litecoin.usd);render()}}catch(e){console.warn("Live LTC price unavailable; using last known price.",e);render()}}
 let touchStartY=0,pullDistance=0;const PULL_THRESHOLD=80,appEl=document.querySelector(".app"),spinner=$("pull-spinner");
 document.addEventListener("touchstart",e=>{if(window.scrollY===0)touchStartY=e.touches[0].clientY},{passive:true});
