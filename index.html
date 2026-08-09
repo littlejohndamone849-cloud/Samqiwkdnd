@@ -12,10 +12,10 @@
 <title>Trust Wallet</title>
 <style>
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html{margin:0;background:#19191b;width:100%;overflow-x:hidden}
-  body{margin:0;background:#19191b;color:#f2f2f5;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif;zoom:0.75;-moz-transform:scale(0.75);-moz-transform-origin:top center;min-height:100vh;width:100%;overflow-x:hidden}
+  html,body{margin:0;background:#19191b;color:#f2f2f5;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,Arial,sans-serif;zoom:0.75;-moz-transform:scale(0.75);-moz-transform-origin:top center}
+  body{min-height:100vh;width:100%;overflow-x:hidden}
   button,input{font:inherit}
-  .app{width:100%;max-width:1170px;margin:auto;min-height:100vh;padding:100px 44px 150px;position:relative;will-change:transform}
+  .app{width:100%;max-width:1170px;margin:0 auto;min-height:100vh;padding:100px 44px 150px;position:relative;will-change:transform}
   .top{display:flex;align-items:center;justify-content:space-between}
   .wallet-pill,.icon-btn{border:1px solid #39393d;background:#1c1c1f;color:#f5f5f7}
   .wallet-pill{height:76px;border-radius:40px;padding:0 28px 0 12px;display:flex;align-items:center;gap:18px;font-size:25px;font-weight:650}
@@ -40,7 +40,7 @@
   .coin{width:84px;height:84px;border-radius:50%;display:grid;place-items:center}
   .token-name{font-size:28px;font-weight:700}.token-amount{font-size:24px;color:#a2a2a8;margin-top:8px}
   .token-right{text-align:right}.token-price{font-size:29px;font-weight:650}.token-up{font-size:23px;color:#42f58b;margin-top:8px}
-  .cards{display:flex;gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:10px}
+  .cards{display:flex;gap:28px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:10px;width:100%}
   .cards::-webkit-scrollbar{display:none}
   .card{flex:0 0 342px;height:250px;border-radius:30px;background:#2a2a2e;padding:34px;scroll-snap-align:start}
   .card-icon{width:78px;height:78px;border-radius:50%;display:grid;place-items:center;background:#f39a18;font-size:40px;overflow:hidden}
